@@ -3,8 +3,13 @@ Reproducible Research: Peer Assessment 1
 
 
 ## Loading and preprocessing the data
+
+Unzip file `activity.zip` if file `activity.csv` doesn't exists and load data to `activityData` using function `read.csv()`:
+
 ```{r echo = T}
-unzip("activity.zip")
+if(!file.exists('activity.csv')) {
+    unzip("activity.zip")
+}
 activityData <- read.csv("activity.csv")
 ```
 
@@ -14,10 +19,10 @@ activityData <- read.csv("activity.csv")
 
 ```{r echo = T}
 stepsPerDate <- aggregate(steps ~ date, data = activityData, FUN = sum)
-barplot(stepsPerDate$steps, names.arg=stepsPerDate$date, xlab="date", ylab="steps")
+hist(stepsPerDate$steps, xlab='Mean of steps by day', breaks=10)
 ```
 
-### **mean** and **median** total number of steps taken per day
+### I am calculating **mean** and **median** total number of steps taken per day
 
 ```{r echo = T}
 mean(stepsPerDate$steps)
@@ -27,19 +32,21 @@ median(stepsPerDate$steps)
 
 ## What is the average daily activity pattern?
 
-### Make a time series plot (i.e. `type = "l"`) of the 5-minute
-   interval (x-axis) and the average number of steps taken, averaged
-   across all days (y-axis)
+### Make a time series plot (i.e. `type = "l"`) of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
 
 ```{r echo = T}
 stepsPerInterval <- aggregate(steps ~ interval, data = activityData, FUN = mean)
 plot(stepsPerInterval, type = "l")
 ```
 
-### Which 5-minute interval, on average across all the days in the
-   dataset, contains the maximum number of steps?
+### Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 
 ```{r echo = T}
 stepsPerInterval$interval[which.max(stepsPerInterval$steps)]
 ```
+
+
+
+
+
 
